@@ -26,8 +26,11 @@ export default defineConfig({
   reporter: [["list"]],
   use: { baseURL: env.APP_URL, trace: "retain-on-failure", launchOptions: process.env.PLAYWRIGHT_CHROMIUM_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH } : {} },
   projects: [
-    { name: "mobile", use: { ...devices["Pixel 7"], browserName: "chromium" } },
-    { name: "desktop", use: { viewport: { width: 1366, height: 900 }, browserName: "chromium" } },
+    { name: "mobile", testIgnore: /admin\.(spec|setup)/, use: { ...devices["Pixel 7"], browserName: "chromium" } },
+    { name: "desktop", testIgnore: /admin\.(spec|setup)/, use: { viewport: { width: 1366, height: 900 }, browserName: "chromium" } },
+    // Admin tests work on the orders and enquiries the shopping tests create, with one shared sign-in.
+    { name: "admin-setup", testMatch: /admin\.setup\.ts/, dependencies: ["mobile", "desktop"], use: { viewport: { width: 1366, height: 900 }, browserName: "chromium" } },
+    { name: "admin", testMatch: /admin\.spec/, dependencies: ["admin-setup"], use: { viewport: { width: 1366, height: 900 }, browserName: "chromium", storageState: "e2e/.auth/admin.json" } },
   ],
   webServer: {
     command: `npx tsx e2e/prepare.ts && npx next build && npx next start -p ${PORT}`,

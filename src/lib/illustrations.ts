@@ -181,6 +181,11 @@ export function illustrationSvg(kind: IllustrationKind): string {
   }
 }
 
+/** URL of the cached illustration file (served by src/app/illustrations/[file]). */
+export function illustrationUrl(kind: IllustrationKind | "hero"): string {
+  return `/illustrations/${kind}.svg`;
+}
+
 export function illustrationDataUri(kind: IllustrationKind): string {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(illustrationSvg(kind))}`;
 }

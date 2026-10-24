@@ -144,3 +144,18 @@ test.describe("security basics", () => {
     expect(await sitemap.text()).toContain("/product/marigold-flowers-loose");
   });
 });
+
+test.describe("responsive layout", () => {
+  for (const width of [360, 768, 1280]) {
+    test(`no sideways scrolling at ${width}px`, async ({ page, isMobile }) => {
+      test.skip(isMobile, "Widths are set explicitly in the desktop project");
+      await page.setViewportSize({ width, height: 800 });
+      for (const path of ["/", "/shop", "/category/marigold-flowers", "/product/marigold-flowers-loose", "/cart", "/checkout", "/bulk-orders", "/delivery", "/track", "/contact", "/faq"]) {
+        await page.goto(path);
+        await page.waitForLoadState("networkidle");
+        const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+        expect(overflow, `${path} overflows by ${overflow}px at ${width}px`).toBeLessThanOrEqual(0);
+      }
+    });
+  }
+});

@@ -152,6 +152,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         <div>
           {items.length ? (
             <>
+              <h2 className="sr-only">Products</h2>
               <ProductGrid products={items} priorityCount={4} />
               <Pagination page={page} total={total} pageSize={PAGE_SIZE} hrefFor={hrefFor} />
             </>

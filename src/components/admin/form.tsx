@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, startTransition, useActionState, useContext, useEffect, useRef } from "react";
+import { createContext, startTransition, useActionState, useContext, useEffect, useId, useRef } from "react";
 import { AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/cn";
 import type { ActionState } from "@/server/admin-action-types";
@@ -104,11 +104,16 @@ function useFieldError(name: string, extra: string[] = []) {
   return errors[name] ?? extra.map((k) => errors[k]).find(Boolean);
 }
 
-export function Field({ name, label, hint, className, errorKeys, children }: FieldProps & { children: React.ReactNode }) {
+/** Several forms can share a page (slots, coupons, FAQs), so ids are unique per field instance. */
+function useFieldId(name: string) {
+  return `f-${name}-${useId().replace(/:/g, "")}`;
+}
+
+export function Field({ id, name, label, hint, className, errorKeys, children }: FieldProps & { id: string; children: React.ReactNode }) {
   const error = useFieldError(name, errorKeys);
   return (
     <div className={className}>
-      <label htmlFor={`f-${name}`} className="field-label">
+      <label htmlFor={id} className="field-label">
         {label}
       </label>
       {children}
@@ -119,27 +124,30 @@ export function Field({ name, label, hint, className, errorKeys, children }: Fie
 
 export function TextInput({ name, label, hint, className, errorKeys, ...rest }: FieldProps & Omit<React.InputHTMLAttributes<HTMLInputElement>, "name">) {
   const error = useFieldError(name, errorKeys);
+  const id = useFieldId(name);
   return (
-    <Field name={name} label={label} hint={hint} className={className} errorKeys={errorKeys}>
-      <input id={`f-${name}`} name={name} className="field-input" aria-invalid={!!error} {...rest} />
+    <Field id={id} name={name} label={label} hint={hint} className={className} errorKeys={errorKeys}>
+      <input id={id} name={name} className="field-input" aria-invalid={!!error} {...rest} />
     </Field>
   );
 }
 
 export function TextArea({ name, label, hint, className, errorKeys, ...rest }: FieldProps & Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "name">) {
   const error = useFieldError(name, errorKeys);
+  const id = useFieldId(name);
   return (
-    <Field name={name} label={label} hint={hint} className={className} errorKeys={errorKeys}>
-      <textarea id={`f-${name}`} name={name} className="field-input" aria-invalid={!!error} rows={4} {...rest} />
+    <Field id={id} name={name} label={label} hint={hint} className={className} errorKeys={errorKeys}>
+      <textarea id={id} name={name} className="field-input" aria-invalid={!!error} rows={4} {...rest} />
     </Field>
   );
 }
 
 export function Select({ name, label, hint, className, options, errorKeys, ...rest }: FieldProps & { options: { value: string; label: string }[] } & Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "name">) {
   const error = useFieldError(name, errorKeys);
+  const id = useFieldId(name);
   return (
-    <Field name={name} label={label} hint={hint} className={className} errorKeys={errorKeys}>
-      <select id={`f-${name}`} name={name} className="field-input" aria-invalid={!!error} {...rest}>
+    <Field id={id} name={name} label={label} hint={hint} className={className} errorKeys={errorKeys}>
+      <select id={id} name={name} className="field-input" aria-invalid={!!error} {...rest}>
         {options.map((o) => (
           <option key={o.value} value={o.value}>
             {o.label}

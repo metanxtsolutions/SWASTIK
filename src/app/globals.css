@@ -70,6 +70,11 @@
   button {
     font: inherit;
   }
+  /* Browsers give fieldsets min-width: min-content, which lets a wide row (such as the
+     horizontally scrolling date picker) stretch the whole page past a phone screen. */
+  fieldset {
+    min-width: 0;
+  }
   /* Larger touch targets for form controls on phones. */
   input:not([type="checkbox"]):not([type="radio"]),
   select,

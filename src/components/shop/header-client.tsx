@@ -14,7 +14,7 @@ export function CartButton({ className }: { className?: string }) {
   const hydrated = useHydrated();
   const count = hydrated ? cart.count(state) : 0;
   return (
-    <Link href="/cart" className={cn("relative inline-flex h-11 min-w-11 items-center justify-center gap-2 rounded-full px-3 font-semibold text-ink hover:bg-sand", className)} aria-label={count ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart, empty"}>
+    <Link href="/cart" className={cn("relative inline-flex h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full px-3 font-semibold text-ink hover:bg-sand", className)} aria-label={count ? `Cart, ${count} item${count === 1 ? "" : "s"}` : "Cart, empty"}>
       <ShoppingBag aria-hidden className="h-5 w-5" />
       <span className="hidden lg:inline">Cart</span>
       {count > 0 ? (
@@ -155,11 +155,11 @@ export function PincodeChip() {
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} className="inline-flex h-11 max-w-[11rem] items-center gap-1.5 rounded-full px-3 text-left text-sm hover:bg-sand">
+      <button type="button" onClick={() => setOpen(true)} className="inline-flex h-11 min-w-0 max-w-[8.75rem] items-center gap-1.5 rounded-full px-2 text-left text-sm hover:bg-sand sm:max-w-[11rem] sm:px-3">
         <MapPin aria-hidden className="h-4.5 w-4.5 shrink-0 text-saffron" />
-        <span className="flex flex-col leading-tight">
+        <span className="flex min-w-0 flex-col leading-tight">
           <span className="text-[0.7rem] text-muted">Deliver to</span>
-          <span className="truncate font-semibold text-ink">{hydrated && pincode ? pincode : "Check PIN code"}</span>
+          <span className="truncate font-semibold text-ink">{hydrated && pincode ? pincode : "Enter PIN"}</span>
         </span>
       </button>
       <dialog ref={dialogRef} onClose={() => setOpen(false)} aria-labelledby="pin-dialog-title" className="m-auto w-[min(28rem,calc(100vw-2rem))] rounded-2xl border border-line bg-paper p-0 text-ink shadow-[var(--shadow-float)] backdrop:bg-ink/40">

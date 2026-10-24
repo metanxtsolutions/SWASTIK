@@ -41,6 +41,7 @@ export function ListingPage(p: Props) {
           Sort and filter
         </Link>
       </div>
+      <h2 className="sr-only">Products</h2>
       <div className="mt-4">{p.products.length ? <ProductGrid products={p.products} priorityCount={4} /> : <EmptyState title="Nothing here yet" body="Please check back soon." action={{ label: "Browse all flowers", href: "/shop" }} />}</div>
       {p.intro ? (
         <section className="mt-12 max-w-3xl">

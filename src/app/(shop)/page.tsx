@@ -6,7 +6,7 @@ import { siteData } from "@/server/site";
 import { bestsellers, listCollections, listProducts, mediaUrl } from "@/server/services/catalog";
 import { activeBanners, listArticles, publishedFaqs, publishedTestimonials } from "@/server/services/content";
 import { listActiveZones } from "@/server/services/delivery";
-import { heroArtSvg } from "@/lib/illustrations";
+import { illustrationUrl } from "@/lib/illustrations";
 import { formatINR } from "@/lib/money";
 import { CategoryTiles } from "@/components/shop/category-tiles";
 import { DeliveryCheck } from "@/components/shop/delivery-check";
@@ -16,7 +16,7 @@ import { Section } from "@/components/shop/section";
 
 export const revalidate = 300;
 
-const HERO_ART = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(heroArtSvg())}`;
+const HERO_ART = illustrationUrl("hero");
 const WHY_ICONS = [UserX, IndianRupee, CalendarClock, ClipboardList, Truck, Sparkles];
 
 export default async function HomePage() {
@@ -76,7 +76,7 @@ export default async function HomePage() {
                 <Image src={mediaUrl(hero.image)} alt={hero.image.alt} fill priority sizes="(min-width: 768px) 45vw, 92vw" className="object-cover" />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={HERO_ART} alt="Illustration of a marigold garland, lotus and puja flowers" className="h-full w-full object-cover" fetchPriority="high" />
+                <img src={HERO_ART} alt="Illustration of a marigold garland, lotus and puja flowers" className="h-full w-full object-cover" width={800} height={640} fetchPriority="high" />
               )}
             </div>
           </div>

@@ -166,8 +166,16 @@ async function imageFor(kind: IllustrationKind, name: string) {
 
 async function main() {
   const env = getEnv();
-  if (env.APP_STAGE === "production") throw new Error("Refusing to add sample data when APP_STAGE=production.");
-  if (process.env.SEED_SAMPLE_DATA !== "true") throw new Error("Set SEED_SAMPLE_DATA=true to add the sample catalogue (development and preview only).");
+  // With --if-enabled (used by deploy builds) a disabled sample seed is skipped quietly.
+  const optional = process.argv.includes("--if-enabled");
+  if (env.APP_STAGE === "production" || process.env.SEED_SAMPLE_DATA !== "true") {
+    if (optional) {
+      console.log("Sample data not added (SEED_SAMPLE_DATA is not true, or this is production)");
+      return;
+    }
+    if (env.APP_STAGE === "production") throw new Error("Refusing to add sample data when APP_STAGE=production.");
+    throw new Error("Set SEED_SAMPLE_DATA=true to add the sample catalogue (development and preview only).");
+  }
   const db = getDb();
   const [done] = await db.select().from(settings).where(eq(settings.key, "_seed_sample_v1"));
   if (done) {

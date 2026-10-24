@@ -27,7 +27,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
       {q ? <p className="mt-3 text-sm text-muted">{total} result{total === 1 ? "" : "s"}</p> : null}
       <div className="mt-5">
         {items.length ? (
-          <ProductGrid products={items} />
+          <>
+            <h2 className="sr-only">Products</h2>
+            <ProductGrid products={items} />
+          </>
         ) : q ? (
           <EmptyState
             title="No flowers found"

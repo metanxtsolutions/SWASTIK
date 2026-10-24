@@ -213,8 +213,8 @@ export function CheckoutForm({ options }: { options: CheckoutOptions }) {
   if (!state.lines.length) return <EmptyCart />;
 
   return (
-    <form onSubmit={submit} noValidate className="grid gap-6 lg:grid-cols-[1fr_24rem] lg:items-start">
-      <div className="space-y-5">
+    <form onSubmit={submit} noValidate className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-start">
+      <div className="min-w-0 space-y-5">
         <div ref={errorRef} tabIndex={-1} aria-live="assertive" className="outline-none">
           {formError ? (
             <p role="alert" className="flex items-start gap-2 rounded-xl bg-danger-soft p-3 text-sm font-medium text-ink">

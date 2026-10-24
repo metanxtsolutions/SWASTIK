@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "vercel-build": "npm run db:migrate && npm run db:seed && next build",
+    "vercel-build": "npm run db:migrate && npm run db:seed && npm run db:seed:sample -- --if-enabled && next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",

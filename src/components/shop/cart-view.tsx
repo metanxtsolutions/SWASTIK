@@ -6,7 +6,7 @@ import { useState } from "react";
 import { AlertCircle, Loader2, RefreshCw, Tag, Trash2 } from "lucide-react";
 import { cart, useCart, useHydrated } from "@/lib/cart-store";
 import { formatINR } from "@/lib/money";
-import { illustrationDataUri, illustrationFor } from "@/lib/illustrations";
+import { illustrationFor, illustrationUrl } from "@/lib/illustrations";
 import { EmptyCart } from "./empty-cart";
 import { QuantityStepper } from "./quantity-stepper";
 import { useQuote } from "./use-quote";
@@ -49,7 +49,7 @@ export function CartView({ checkoutNote }: { checkoutNote: string }) {
   const hasValid = quote.lines.some((l) => !l.issue);
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_22rem] lg:items-start">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
       <section aria-labelledby="cart-items">
         <h2 id="cart-items" className="sr-only">
           Items in your cart
@@ -71,7 +71,7 @@ export function CartView({ checkoutNote }: { checkoutNote: string }) {
                   <Image src={`/api/media/${l.imageId}/${l.imageFilename}`} alt="" fill sizes="96px" className="object-cover" />
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={illustrationDataUri(illustrationFor(l.name))} alt="" className="h-full w-full object-cover" />
+                  <img src={illustrationUrl(illustrationFor(l.name))} alt="" className="h-full w-full object-cover" />
                 )}
               </Link>
               <div className="flex min-w-0 flex-1 flex-col">

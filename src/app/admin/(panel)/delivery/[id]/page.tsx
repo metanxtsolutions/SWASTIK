@@ -83,15 +83,15 @@ export default async function ZonePage({ params }: { params: Promise<{ id: strin
                 </li>
               ))}
             </ul>
-            <details className="mt-3 rounded-2xl border border-dashed border-line p-3" open={!slots.length}>
-              <summary className="cursor-pointer text-sm font-semibold text-saffron-dark">Add a time slot</summary>
+            <div className="mt-3 rounded-2xl border border-dashed border-line p-3">
+              <h3 className="font-sans text-sm font-semibold text-saffron-dark">Add a time slot</h3>
               <BoundForm action={saveSlotAction} id={zone.id} className="mt-3" resetOnSuccess>
                 <SlotFields />
                 <div className="mt-3">
                   <SubmitButton className="btn-sm">Add slot</SubmitButton>
                 </div>
               </BoundForm>
-            </details>
+            </div>
           </Panel>
           <Panel title="Dates closed in this area">
             <BoundForm action={addBlackoutAction} id={zone.id} className="mb-3 grid grid-cols-[1fr_1fr_auto] items-end gap-2" resetOnSuccess>

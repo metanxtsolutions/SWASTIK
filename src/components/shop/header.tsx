@@ -32,12 +32,12 @@ export function SiteHeader({ site }: { site: SiteData }) {
           </p>
         </div>
       ) : null}
-      <div className="container-page flex h-16 items-center gap-3 md:h-[4.5rem] md:gap-5">
-        <Link href="/" className="shrink-0" aria-label={`${business.name} home`}>
+      <div className="container-page flex h-16 items-center gap-2 md:h-[4.5rem] md:gap-5">
+        <Link href="/" className="shrink-0">
           <Logo name={business.name} tagline={business.tagline} />
         </Link>
         <SearchBox className="hidden flex-1 md:block" id="search-desktop" />
-        <div className="ml-auto flex items-center gap-1 md:ml-0">
+        <div className="ml-auto flex min-w-0 items-center gap-0.5 sm:gap-1 md:ml-0">
           <PincodeChip />
           <Link href="/bulk-orders" className="hidden h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold text-ink hover:bg-sand lg:inline-flex">
             <Building2 aria-hidden className="h-5 w-5" />
